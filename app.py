@@ -1,7 +1,7 @@
 import streamlit as st
 import gspread
 from datetime import datetime
-import time # 시간을 세기 위한 도구 추가
+import time 
 
 # 페이지 설정
 st.set_page_config(page_title="세계지리 세특 조사", page_icon="🌏")
@@ -16,9 +16,8 @@ def get_google_sheet():
 st.title("🌏 2025 2학기 세계지리")
 st.subheader("교과세특 기초자료 수집")
 
-# 성공 메시지와 지도가 나타날 자리를 미리 만들어둡니다.
-success_message = st.empty()
-map_area = st.empty()
+# 🔥 핵심: 메시지와 그림이 뜰 공간을 미리 찜해둡니다.
+result_area = st.empty()
 
 st.write("반, 번호, 이름을 정확하게 입력하고 제출 버튼을 눌러주세요.")
 
@@ -38,22 +37,25 @@ with st.form("survey_form", clear_on_submit=True):
                     sheet = get_google_sheet()
                     submit_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     sheet.append_row([submit_time, student_class, int(student_number), student_name])
+                
+                # --- 성공 화면 (컨테이너 방식) ---
+                # 이 공간(result_area) 안에 묶어서 보여줍니다.
+                with result_area.container():
+                    st.success(f"✅ {student_name} 학생, 제출 완료!")
                     
-                # --- 성공 효과 (귀여운 지도 깜짝 등장!) ---
-                # 1. 성공 메시지 표시
-                success_message.success(f"✅ {student_name} 학생, 제출 완료!")
+                    # 💡 학교망에서도 잘 뜨는 위키미디어(Wikimedia) 이미지로 변경했습니다.
+                    # (알록달록한 국가별 지도입니다)
+                    st.image(
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/World_map_with_nations.svg/1024px-World_map_with_nations.svg.png",
+                        caption="세계로 뻗어나가세요! ✈️",
+                        use_column_width=True
+                    )
                 
-                # 2. 귀여운 세계지도 이미지 표시 (무료 일러스트 사용)
-                map_area.image(
-                    "https://cdn.pixabay.com/photo/2018/01/31/09/57/world-map-3120397_1280.png",
-                    caption="넓은 세상으로! 🚀",
-                    use_column_width=True
-                )
+                # 4초 동안 보여주고 사라짐 (로딩 시간 고려해서 1초 늘렸습니다)
+                time.sleep(4)
                 
-                # 3. 3초 동안 보여주고 사라지기
-                time.sleep(3) # 3초 기다림
-                success_message.empty() # 메시지 지우기
-                map_area.empty() # 지도 지우기
+                # 공간 비우기 (메시지와 그림이 같이 사라짐)
+                result_area.empty()
                 
             except Exception as e:
                 st.error(f"오류가 발생했습니다: {e}")
