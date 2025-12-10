@@ -14,7 +14,7 @@ def get_google_sheet():
 
 # --- 화면 구성 ---
 st.title("🌏 2025 2학기 세계지리")
-st.subheader("교과세특 기초자료 수집")
+st.subheader("교과세특 활동 소감 수집")
 
 # 🔥 핵심: 메시지와 그림이 뜰 공간을 미리 찜해둡니다.
 result_area = st.empty()
@@ -46,7 +46,7 @@ with st.form("survey_form", clear_on_submit=True):
                     # 💡 학교망에서도 잘 뜨는 위키미디어(Wikimedia) 이미지로 변경했습니다.
                     # (알록달록한 국가별 지도입니다)
                     st.image(
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/World_map_with_nations.svg/1024px-World_map_with_nations.svg.png",
+                        "https://previews.123rf.com/images/yanalyso/yanalyso2408/yanalyso240800984/233573030-hand-drawn-globe-illustration-isolated-on-a-white-background-concept-of-world-map-geography.jpg",
                         caption="세계로 뻗어나가세요! ✈️",
                         use_column_width=True
                     )
@@ -59,3 +59,4 @@ with st.form("survey_form", clear_on_submit=True):
                 
             except Exception as e:
                 st.error(f"오류가 발생했습니다: {e}")
+
